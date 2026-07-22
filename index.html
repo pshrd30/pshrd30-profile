@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>PSHRD-30 · ZENITH</title>
+  <!-- Font Awesome (free icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+    }
+    body {
+      background: #f4f7fc;
+      padding: 1.5rem 1rem 3rem;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* header with logos */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      border-radius: 2rem;
+      padding: 0.75rem 1.8rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .logo-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .logo-item img {
+      height: 48px;
+      width: auto;
+      max-width: 60px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #f0f2f5;
+      padding: 4px;
+    }
+    .logo-divider {
+      width: 1px;
+      height: 36px;
+      background: #d0d7de;
+    }
+    .batch-title {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      line-height: 1.3;
+    }
+    .batch-title .batch {
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: #0b2b4a;
+      letter-spacing: 1px;
+    }
+    .batch-title .sub {
+      font-weight: 500;
+      color: #2c5778;
+      background: #e7edf5;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+    }
+
+    /* search / filter */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      gap: 0.8rem;
+    }
+    .search-box {
+      background: white;
+      padding: 0.3rem 1rem 0.3rem 1.5rem;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+      border: 1px solid #e2e8f0;
+      flex: 1 1 260px;
+    }
+    .search-box i {
+      color: #8a9bb5;
+      margin-right: 10px;
+    }
+    .search-box input {
+      border: none;
+      padding: 0.7rem 0;
+      width: 100%;
+      font-size: 0.95rem;
+      background: transparent;
+      outline: none;
+    }
+    .badge-batch {
+      background: #1d3b5c;
+      color: white;
+      padding: 0.4rem 1.5rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,40,80,0.08);
+    }
+
+    /* card grid */
+    .member-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .member-card {
+      background: white;
+      border-radius: 28px;
+      padding: 1.6rem 1rem 1.2rem;
+      box-shadow: 0 8px 24px rgba(0, 20, 40, 0.04);
+      transition: 0.25s ease;
+      border: 1px solid #f0f4fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      backdrop-filter: blur(2px);
+    }
+    .member-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 30px rgba(0, 20, 40, 0.08);
+      border-color: #cddbe9;
+    }
+
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #eef2f7;
+      border: 3px solid white;
+      box-shadow: 0 8px 14px rgba(0,0,0,0.04);
+      margin-bottom: 0.7rem;
+    }
+    .member-name-bn {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0b1f33;
+      line-height: 1.3;
+    }
+    .member-name-en {
+      font-size: 0.9rem;
+      color: #3f5569;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      margin-bottom: 0.25rem;
+    }
+    .member-nick {
+      font-size: 0.8rem;
+      background: #eef3f9;
+      padding: 0.15rem 1rem;
+      border-radius: 30px;
+      display: inline-block;
+      color: #1f405e;
+      font-weight: 500;
+      margin: 0.25rem 0 0.5rem;
+    }
+    .member-id {
+      font-size: 0.75rem;
+      background: #eaeef5;
+      padding: 0.15rem 0.9rem;
+      border-radius: 30px;
+      color: #2a4d6e;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .contact-icons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem 1.2rem;
+      margin: 0.8rem 0 0.2rem;
+      width: 100%;
+      border-top: 1px solid #ecf1f8;
+      padding-top: 0.9rem;
+    }
+    .contact-icons a {
+      color: #2a4d6e;
+      font-size: 1.3rem;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      background: #f2f6fd;
+      padding: 0.3rem 0.7rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .contact-icons a i {
+      font-size: 1.1rem;
+    }
+    .contact-icons a:hover {
+      background: #dce6f2;
+      color: #0b2b4a;
+      transform: scale(1.02);
+    }
+    .contact-icons .whatsapp i { color: #25D366; }
+    .contact-icons .email i { color: #c71610; }
+    .contact-icons .phone i { color: #1d7a9e; }
+    .contact-icons .fb i { color: #1877f2; }
+
+    .extra-meta {
+      font-size: 0.7rem;
+      color: #62748b;
+      margin-top: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2rem 0.8rem;
+      justify-content: center;
+      background: #f8faff;
+      padding: 0.2rem 0.6rem;
+      border-radius: 30px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .footer-note {
+      margin-top: 3.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6f85a0;
+      border-top: 1px solid #dfe8f2;
+      padding-top: 2rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* responsive */
+    @media (max-width: 640px) {
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
+      .logo-group {
+        justify-content: center;
+      }
+      .batch-title {
+        align-items: center;
+      }
+      .member-grid {
+        gap: 1.2rem;
+      }
+      .contact-icons a {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.6rem;
+      }
+    }
+
+    /* utility */
+    .text-muted { color: #4a617b; }
+    .mt-1 { margin-top: 0.3rem; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER with logos -->
+  <div class="header">
+    <div class="logo-group">
+      <div class="logo-item">
+        <!-- RU logo: ru.jpg (replace with actual image) -->
+        <img src="ru.jpg" alt="Rajshahi University" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22 viewBox=%220 0 80 80%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%231d3b5c%22/%3E%3Ctext x=%2220%22 y=%2248%22 fill=%22white%22 font-size=%2228%22 font-weight=%22bold%22%3ERU%3C/text%3E%3C/svg%3E'">
+        <span style="font-weight:600; color:#1a3b5a; font-size:0.9rem;">RU</span>
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <!-- PSHRD logo: pshrd.jpg -->
+        <img src="pshrd.jpg" alt="PSHRD" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22 viewBox=%220 0 80 80%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%233d6b4d%22/%3E%3Ctext x=%2212%22 y=%2248%22 fill=%22white%22 font-size=%2222%22 font-weight=%22bold%22%3EPSHRD%3C/text%3E%3C/svg%3E'">
+        <span style="font-weight:600; color:#1a3b5a; font-size:0.9rem;">PSHRD</span>
+      </div>
+    </div>
+    <div class="batch-title">
+      <span class="batch">✨ ZENITH</span>
+      <span class="sub"><i class="fas fa-users" style="margin-right:6px;"></i> ৩০তম ব্যাচ · ২০২৫-২৬</span>
+    </div>
+  </div>
+
+  <!-- toolbar -->
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="নাম, আইডি, ডাকনাম..." onkeyup="filterMembers()">
+    </div>
+    <div class="badge-batch">
+      <i class="fas fa-layer-group" style="margin-right:6px;"></i> মোট সদস্য: <span id="memberCount">0</span>
+    </div>
+  </div>
+
+  <!-- member cards -->
+  <div id="memberGrid" class="member-grid"></div>
+
+  <div class="footer-note">
+    <i class="fas fa-code" style="margin-right:6px;"></i> PSHRD-30 · ZENITH · ২০২৫-২৬ · রাজশাহী বিশ্ববিদ্যালয়
+  </div>
+</div>
+
+<script>
+  // ---------- raw data from spreadsheet (embedded) ----------
+  const membersData = [
+  { id: 2612627101, nameBn: "ফাইরুজ রাইসা আবেদীন", nameEn: "Fairooz Raisa Abeden", nickBn: "রাইসা", nickEn: "Raisa", phone: "01853363652", phone2: "", email: "fairoozabeden@gmail.com", dob: "2007-02-18", blood: "O+", college: "Rajshahi Government Women's College, Rajshahi", district: "Rajshahi", fb: "https://www.facebook.com/share/1JVpXAs2E4/", batch: "২০২৫-২৬", photo: "2612627101.jpg", comment: "" },
+  { id: 2610427102, nameBn: "দিপঙ্কর বাড়ৈ", nameEn: "Dipankar Barai", nickBn: "দিপঙ্কর", nickEn: "Dipankar", phone: "01970574205", phone2: "01522136126", email: "diponkorbaroi@gmail.com", dob: "2007-06-03", blood: "AB-", college: "BAF Shaheen College Kurmitola, Dhaka Cantonment.", district: "Dhaka", fb: "https://www.facebook.com/share/1953HC9tke/", batch: "২০২৫-২৬", photo: "2610427102.jpg", comment: "পরে কিন্তু ছবি চেঞ্জ করবো।" },
+  { id: 2611227104, nameBn: "আলমাস ইশতিয়াক", nameEn: "ALMAS ISHTIAK", nickBn: "ইশতিয়াক", nickEn: "ISHTIAK", phone: "01570229583", phone2: "01570229583", email: "almasishtiak02@gmail", dob: "2005-11-11", blood: "O+", college: "Adamjee Cantonment College", district: "Dhaka", fb: "https://www.facebook.com/share/1BYyp5bKzd/", batch: "২০২৫-২৬", photo: "2611227104.jpg", comment: "Stoic" },
+  { id: 2610827105, nameBn: "মোঃ শাহরিয়ার হক শাওন", nameEn: "Md. Shahriar Haque Shaon", nickBn: "শাওন", nickEn: "Shaon", phone: "01735402414", phone2: "01303265436", email: "shahriarhaque4014@gmail.com", dob: "2008-07-13", blood: "A+", college: "BAF Shaheen College Bogura.", district: "বগুড়া", fb: "https://facebook.com/shshaonok", batch: "২০২৫-২৬", photo: "2610827105.jpg", comment: "" },
+{ id: 2612627106, nameBn: "হুমায়রা হাসান মাহিরা", nameEn: "Humaira Hasan Mahira", nickBn: "মাহিরা", nickEn: "Mahira", phone: "01711732193", phone2: "", email: "mahirahasan2026@gmail.com", dob: "2006-12-02", blood: "O+", college: "Uttara Government College", district: "Dhaka", fb: "https://www.facebook.com/share/18SxE7qomp/", batch: "২০২৫-২৬", photo: "2612627106.jpg", comment: "Life is colorful" },
+  { id: 2611227109, nameBn: "আকন্দ মন্ডল", nameEn: "Acondo Mondol", nickBn: "বাঁধন", nickEn: "Badhon", phone: "01314986491", phone2: "01314986491", email: "badhon1944@gmail.com", dob: "2005-12-10", blood: "B+", college: "Dhaka Residential Model College", district: "Rajshahi", fb: "https://www.facebook.com/share/1Jf8f18C2D/", batch: "২০২৫-২৬", photo: "2611227109.jpg", comment: "PSHRD best🥀" },
+  { id: 2611027110, nameBn: "রমিনুল ইসলাম রোহান", nameEn: "ROMINUL ISLAM ROHAN", nickBn: "রোহান", nickEn: "Rohan", phone: "01727352757", phone2: "01727352757", email: "rr3506585@gmail.com", dob: "2006-04-07", blood: "O+", college: "Lohagara govt adarsha college", district: "Narail", fb: "https://www.facebook.com/share/1Dw2F8sD89/", batch: "২০২৫-২৬", photo: "2611027110.jpg", comment: "" },
+  { id: 2612027111, nameBn: "আদিবা আফরিন অহনা", nameEn: "Adiba Afrin Ahana", nickBn: "আদিবা", nickEn: "Adiba", phone: "01533903183", phone2: "", email: "adibaahana@gmail.com", dob: "2006-10-25", blood: "O+", college: "Muminunnisa Govt. Mohila College", district: "Mymensingh", fb: "https://www.facebook.com/share/1DCEdotmfQ/", batch: "২০২৫-২৬", photo: "2612027111.jpg", comment: "Worth every effort." },
+  { id: 2611227112, nameBn: "ইউসুফ সুলতান ইমন", nameEn: "Usufe Sultan Emon", nickBn: "ইমন", nickEn: "Emon", phone: "01881203622", phone2: "01881203622", email: "usufesultan1234@gmail.com", dob: "2007-07-02", blood: "B+", college: "Notre Dame College Mymensingh", district: "Kishoreganj", fb: "https://www.facebook.com/usufesultan", batch: "২০২৫-২৬", photo: "2611227112.jpg", comment: "" },
+  { id: 2610727113, nameBn: "আজিম মিয়া", nameEn: "Azim Mia", nickBn: "আজিম", nickEn: "Azim", phone: "01331462170", phone2: "01331462170", email: "md.azim.mia1920@gmail.com", dob: "2006-12-17", blood: "B+", college: "Shahid Govt. Bulbul College,Pabna", district: "Pabna", fb: "https://www.facebook.com/share/1HMyvzT9Ka/", batch: "২০২৫-২৬", photo: "2610727113.jpg", comment: "" },
+  { id: 2610627114, nameBn: "মোহাম্মদ জহির খান", nameEn: "MD. ZAHEER KHAN", nickBn: "জহির", nickEn: "ZAHEER", phone: "1521723973", phone2: "1748428958", email: "zaheerkhan4zkn@gmail.com", dob: "2005-06-01", blood: "B+", college: "Rajshahi Govt. City College, Rajshahi.", district: "Rajshahi", fb: "https://www.facebook.com/mdzaheer.khanneloy", batch: "২০২৫-২৬", photo: "2610627114.jpg", comment: "" },
+  { id: 2610627115, nameBn: "জয় চন্দ্র মহন্ত", nameEn: "JOY CHANDRA MAHANTA", nickBn: "জয়", nickEn: "Joy", phone: "01798699864", phone2: "01798699864", email: "joymohonto28@gmail.com", dob: "2006-03-05", blood: "O+", college: "Police Lines School And College, Rnagpur", district: "Rangpur", fb: "https://www.facebook.com/share/1KUnCF5fL4/", batch: "২০২৫-২৬", photo: "2610627115.jpg", comment: "“সত্যের চেয়ে প্রাচীন আর কিছু নেই。”" },
+  { id: 2610227116, nameBn: "মো.নাসিম", nameEn: "Md. Nasim", nickBn: "নাসিম", nickEn: "Nasim", phone: "01322326385", phone2: "", email: "mdnasimhossen063@gmail.com", dob: "2006-01-23", blood: "A+", college: "Pabna Islamia Madrasah", district: "Pabna", fb: "https://www.facebook.com/md.nasimhossen.31508", batch: "২০২৫-২৬", photo: "2610227116.jpg", comment: "" },
+  { id: 2610827117, nameBn: "মো: শাহাদত ইসলাম সাদ", nameEn: "Md Sahadat Islam Shad", nickBn: "সাদ", nickEn: "Shad", phone: "01972183936", phone2: "", email: "azadul99012@gmail", dob: "2007-02-08", blood: "O+", college: "Bangladesh noubahini school and College,khulna", district: "Bogura", fb: "https://www.facebook.com/shad.s.9275", batch: "২০২৫-২৬", photo: "2610827117.jpg", comment: "Resilient" },
+  { id: 2610627118, nameBn: "আবিদ হাসানাত সাইফ", nameEn: "Abid Hasnat Saif", nickBn: "আবিদ", nickEn: "Abid", phone: "01767660634", phone2: "01980959453", email: "proyashahmed2005@gmail.com", dob: "2007-05-12", blood: "B+", college: "Shahid Smrity Government College", district: "MYMENSIGH", fb: "https://www.facebook.com/share/1NQ4YvizAg/", batch: "২০২৫-২৬", photo: "2610627118.jpg", comment: "" },
+  { id: 2610527119, nameBn: "মো. তাবিব রাইয়ান", nameEn: "MD. TABIB RAIYAN", nickBn: "এমটআর বাঁধন", nickEn: "MTR BADHON", phone: "01330607053", phone2: "", email: "mtrbadhon571@gmail.com", dob: "2007-03-15", blood: "A+", college: "Government Akbar Ali College", district: "Sirajgonj", fb: "https://www.facebook.com/share/1E2a8DNC1N/", batch: "২০২৫-২৬", photo: "2610527119.jpg", comment: "" },
+  { id: 2610227120, nameBn: "রাইয়ান হোসেন", nameEn: "Ryan Hossain", nickBn: "রাইয়ান", nickEn: "Ryan", phone: "01730484555", phone2: "01572914702", email: "ryanhossain05@gmail.com", dob: "2007-08-26", blood: "A+", college: "Govt. Sundarban Adarsha College", district: "Khulna", fb: "fb.com/RyanHossain123", batch: "২০২৫-২৬", photo: "2610227120.jpg", comment: "" },
+  { id: 2610127121, nameBn: "মো:শাওন চৌধুরী", nameEn: "Md. Shawon chowdhury", nickBn: "শাওন", nickEn: "Shawon", phone: "01831304302", phone2: "01771780604", email: "chowdhuryshawon863@gmail.com", dob: "2006-10-25", blood: "B+", college: "Saidpur Govt. Science College", district: "Dinajpur", fb: "https://www.facebook.com/share/1BRUi2g4me/", batch: "২০২৫-২৬", photo: "2610127121.jpg", comment: "Friendly" },
+  { id: 2612127124, nameBn: "নুর নাহার খাতুন তুলি", nameEn: "Noor Nahar Khatun Tuly", nickBn: "তুলি", nickEn: "Tuly", phone: "01731821247", phone2: "", email: "noornahartuly569@gmail.com", dob: "2005-01-19", blood: "O+", college: "Shahid Buddhijibi Government College", district: "Chapai Nawabganj", fb: "https://www.facebook.com/share/1Dz9JNSBRj/", batch: "২০২৫-২৬", photo: "2612127124.jpg", comment: "" },
+  { id: 2610427125, nameBn: "শায়েদ খান", nameEn: "Shayed khan", nickBn: "শায়েদ", nickEn: "Shayed", phone: "01999861960", phone2: "019799534000", email: "shyedkhan006@gmail.com", dob: "2006-08-20", blood: "O+", college: "Dhaka Commerce College, Dhaka", district: "Madaripur", fb: "https://www.facebook.com/share/1Gd1maSWpP/", batch: "২০২৫-২৬", photo: "2610427125.jpg", comment: "" },
+  { id: 2612027126, nameBn: "ফারহানা আফরিন বিথী", nameEn: "Farhana Afrin Bithy", nickBn: "বিথী", nickEn: "Bithy", phone: "01521249980", phone2: "", email: "farhanabithy97@gamil.com", dob: "2006-02-02", blood: "A+", college: "Collegiate Girls College", district: "Dinajpur", fb: "www.facebook.com/farhana.bithy.766548", batch: "২০২৫-২৬", photo: "2612027126.jpg", comment: "Be your own kind of beautiful" },
+  // shortened for brevity – but all 58 entries included in full code. 
+  // (remaining 36 entries are present in the embedded array, but for space we keep a representative sample)
+  // The full list is exactly as provided, but I'll include all in the actual delivered code.
+  ];
+
+  // ----- full 58 members (I'll paste the complete array here; above only sample for demo) -----
+  // Actually to keep response size safe, I'm using the full dataset from the spreadsheet.
+  // We reconstruct the full array from the given data. 
+  // I'll include all 58 entries in the final code.
+
+  // For brevity, I'm building the full list from the provided table in code. 
+  // All 58 members are included in the final script.
+  // (I will assign the complete array below.)
+
+  // ================ FULL MEMBER LIST (58) =================
+  const fullMembers = [
+    { id: 2612627101, nameBn: "ফাইরুজ রাইসা আবেদীন", nameEn: "Fairooz Raisa Abeden", nickBn: "রাইসা", nickEn: "Raisa", phone: "01853363652", phone2: "", email: "fairoozabeden@gmail.com", dob: "2007-02-18", blood: "O+", college: "Rajshahi Government Women's College, Rajshahi", district: "Rajshahi", fb: "https://www.facebook.com/share/1JVpXAs2E4/", batch: "২০২৫-২৬", photo: "2612627101.jpg", comment: "" },
+    { id: 2610427102, nameBn: "দিপঙ্কর বাড়ৈ", nameEn: "Dipankar Barai", nickBn: "দিপঙ্কর", nickEn: "Dipankar", phone: "01970574205", phone2: "01522136126", email: "diponkorbaroi@gmail.com", dob: "2007-06-03", blood: "AB-", college: "BAF Shaheen College Kurmitola, Dhaka Cantonment.", district: "Dhaka", fb: "https://www.facebook.com/share/1953HC9tke/", batch: "২০২৫-২৬", photo: "2610427102.jpg", comment: "পরে কিন্তু ছবি চেঞ্জ করবো।" },
+    { id: 2611227104, nameBn: "আলমাস ইশতিয়াক", nameEn: "ALMAS ISHTIAK", nickBn: "ইশতিয়াক", nickEn: "ISHTIAK", phone: "01570229583", phone2: "01570229583", email: "almasishtiak02@gmail", dob: "2005-11-11", blood: "O+", college: "Adamjee Cantonment College", district: "Dhaka", fb: "https://www.facebook.com/share/1BYyp5bKzd/", batch: "২০২৫-২৬", photo: "2611227104.jpg", comment: "Stoic" },
+   { id: 2610827105, nameBn: "মোঃ শাহরিয়ার হক শাওন", nameEn: "Md. Shahriar Haque Shaon", nickBn: "শাওন", nickEn: "Shaon", phone: "01735402414", phone2: "01303265436", email: "shahriarhaque4014@gmail.com", dob: "2008-07-13", blood: "A+", college: "BAF Shaheen College Bogura.", district: "বগুড়া", fb: "https://facebook.com/shshaonok", batch: "২০২৫-২৬", photo: "2610827105.jpg", comment: "" },
+  { id: 2612627106, nameBn: "হুমায়রা হাসান মাহিরা", nameEn: "Humaira Hasan Mahira", nickBn: "মাহিরা", nickEn: "Mahira", phone: "01711732193", phone2: "", email: "mahirahasan2026@gmail.com", dob: "2006-12-02", blood: "O+", college: "Uttara Government College", district: "Dhaka", fb: "https://www.facebook.com/share/18SxE7qomp/", batch: "২০২৫-২৬", photo: "2612627106.jpg", comment: "Life is colorful" },
+    { id: 2611227109, nameBn: "আকন্দ মন্ডল", nameEn: "Acondo Mondol", nickBn: "বাঁধন", nickEn: "Badhon", phone: "01314986491", phone2: "01314986491", email: "badhon1944@gmail.com", dob: "2005-12-10", blood: "B+", college: "Dhaka Residential Model College", district: "Rajshahi", fb: "https://www.facebook.com/share/1Jf8f18C2D/", batch: "২০২৫-২৬", photo: "2611227109.jpg", comment: "PSHRD best🥀" },
+    { id: 2611027110, nameBn: "রমিনুল ইসলাম রোহান", nameEn: "ROMINUL ISLAM ROHAN", nickBn: "রোহান", nickEn: "Rohan", phone: "01727352757", phone2: "01727352757", email: "rr3506585@gmail.com", dob: "2006-04-07", blood: "O+", college: "Lohagara govt adarsha college", district: "Narail", fb: "https://www.facebook.com/share/1Dw2F8sD89/", batch: "২০২৫-২৬", photo: "2611027110.jpg", comment: "" },
+    { id: 2612027111, nameBn: "আদিবা আফরিন অহনা", nameEn: "Adiba Afrin Ahana", nickBn: "আদিবা", nickEn: "Adiba", phone: "01533903183", phone2: "", email: "adibaahana@gmail.com", dob: "2006-10-25", blood: "O+", college: "Muminunnisa Govt. Mohila College", district: "Mymensingh", fb: "https://www.facebook.com/share/1DCEdotmfQ/", batch: "২০২৫-২৬", photo: "2612027111.jpg", comment: "Worth every effort." },
+    { id: 2611227112, nameBn: "ইউসুফ সুলতান ইমন", nameEn: "Usufe Sultan Emon", nickBn: "ইমন", nickEn: "Emon", phone: "01881203622", phone2: "01881203622", email: "usufesultan1234@gmail.com", dob: "2007-07-02", blood: "B+", college: "Notre Dame College Mymensingh", district: "Kishoreganj", fb: "https://www.facebook.com/usufesultan", batch: "২০২৫-২৬", photo: "2611227112.jpg", comment: "" },
+    { id: 2610727113, nameBn: "আজিম মিয়া", nameEn: "Azim Mia", nickBn: "আজিম", nickEn: "Azim", phone: "01331462170", phone2: "01331462170", email: "md.azim.mia1920@gmail.com", dob: "2006-12-17", blood: "B+", college: "Shahid Govt. Bulbul College,Pabna", district: "Pabna", fb: "https://www.facebook.com/share/1HMyvzT9Ka/", batch: "২০২৫-২৬", photo: "2610727113.jpg", comment: "" },
+    { id: 2610627114, nameBn: "মোহাম্মদ জহির খান", nameEn: "MD. ZAHEER KHAN", nickBn: "জহির", nickEn: "ZAHEER", phone: "1521723973", phone2: "1748428958", email: "zaheerkhan4zkn@gmail.com", dob: "2005-06-01", blood: "B+", college: "Rajshahi Govt. City College, Rajshahi.", district: "Rajshahi", fb: "https://www.facebook.com/mdzaheer.khanneloy", batch: "২০২৫-২৬", photo: "2610627114.jpg", comment: "" },
+    { id: 2610627115, nameBn: "জয় চন্দ্র মহন্ত", nameEn: "JOY CHANDRA MAHANTA", nickBn: "জয়", nickEn: "Joy", phone: "01798699864", phone2: "01798699864", email: "joymohonto28@gmail.com", dob: "2006-03-05", blood: "O+", college: "Police Lines School And College, Rnagpur", district: "Rangpur", fb: "https://www.facebook.com/share/1KUnCF5fL4/", batch: "২০২৫-২৬", photo: "2610627115.jpg", comment: "“সত্যের চেয়ে প্রাচীন আর কিছু নেই。”" },
+    { id: 2610227116, nameBn: "মো.নাসিম", nameEn: "Md. Nasim", nickBn: "নাসিম", nickEn: "Nasim", phone: "01322326385", phone2: "", email: "mdnasimhossen063@gmail.com", dob: "2006-01-23", blood: "A+", college: "Pabna Islamia Madrasah", district: "Pabna", fb: "https://www.facebook.com/md.nasimhossen.31508", batch: "২০২৫-২৬", photo: "2610227116.jpg", comment: "" },
+    { id: 2610827117, nameBn: "মো: শাহাদত ইসলাম সাদ", nameEn: "Md Sahadat Islam Shad", nickBn: "সাদ", nickEn: "Shad", phone: "01972183936", phone2: "", email: "azadul99012@gmail", dob: "2007-02-08", blood: "O+", college: "Bangladesh noubahini school and College,khulna", district: "Bogura", fb: "https://www.facebook.com/shad.s.9275", batch: "২০২৫-২৬", photo: "2610827117.jpg", comment: "Resilient" },
+    { id: 2610627118, nameBn: "আবিদ হাসানাত সাইফ", nameEn: "Abid Hasnat Saif", nickBn: "আবিদ", nickEn: "Abid", phone: "01767660634", phone2: "01980959453", email: "proyashahmed2005@gmail.com", dob: "2007-05-12", blood: "B+", college: "Shahid Smrity Government College", district: "MYMENSIGH", fb: "https://www.facebook.com/share/1NQ4YvizAg/", batch: "২০২৫-২৬", photo: "2610627118.jpg", comment: "" },
+    { id: 2610527119, nameBn: "মো. তাবিব রাইয়ান", nameEn: "MD. TABIB RAIYAN", nickBn: "এমটআর বাঁধন", nickEn: "MTR BADHON", phone: "01330607053", phone2: "", email: "mtrbadhon571@gmail.com", dob: "2007-03-15", blood: "A+", college: "Government Akbar Ali College", district: "Sirajgonj", fb: "https://www.facebook.com/share/1E2a8DNC1N/", batch: "২০২৫-২৬", photo: "2610527119.jpg", comment: "" },
+    { id: 2610227120, nameBn: "রাইয়ান হোসেন", nameEn: "Ryan Hossain", nickBn: "রাইয়ান", nickEn: "Ryan", phone: "01730484555", phone2: "01572914702", email: "ryanhossain05@gmail.com", dob: "2007-08-26", blood: "A+", college: "Govt. Sundarban Adarsha College", district: "Khulna", fb: "fb.com/RyanHossain123", batch: "২০২৫-২৬", photo: "2610227120.jpg", comment: "" },
+    { id: 2610127121, nameBn: "মো:শাওন চৌধুরী", nameEn: "Md. Shawon chowdhury", nickBn: "শাওন", nickEn: "Shawon", phone: "01831304302", phone2: "01771780604", email: "chowdhuryshawon863@gmail.com", dob: "2006-10-25", blood: "B+", college: "Saidpur Govt. Science College", district: "Dinajpur", fb: "https://www.facebook.com/share/1BRUi2g4me/", batch: "২০২৫-২৬", photo: "2610127121.jpg", comment: "Friendly" },
+    { id: 2612127124, nameBn: "নুর নাহার খাতুন তুলি", nameEn: "Noor Nahar Khatun Tuly", nickBn: "তুলি", nickEn: "Tuly", phone: "01731821247", phone2: "", email: "noornahartuly569@gmail.com", dob: "2005-01-19", blood: "O+", college: "Shahid Buddhijibi Government College", district: "Chapai Nawabganj", fb: "https://www.facebook.com/share/1Dz9JNSBRj/", batch: "২০২৫-২৬", photo: "2612127124.jpg", comment: "" },
+    { id: 2610427125, nameBn: "শায়েদ খান", nameEn: "Shayed khan", nickBn: "শায়েদ", nickEn: "Shayed", phone: "01999861960", phone2: "019799534000", email: "shyedkhan006@gmail.com", dob: "2006-08-20", blood: "O+", college: "Dhaka Commerce College, Dhaka", district: "Madaripur", fb: "https://www.facebook.com/share/1Gd1maSWpP/", batch: "২০২৫-২৬", photo: "2610427125.jpg", comment: "" },
+    { id: 2612027126, nameBn: "ফারহানা আফরিন বিথী", nameEn: "Farhana Afrin Bithy", nickBn: "বিথী", nickEn: "Bithy", phone: "01521249980", phone2: "", email: "farhanabithy97@gamil.com", dob: "2006-02-02", blood: "A+", college: "Collegiate Girls College", district: "Dinajpur", fb: "www.facebook.com/farhana.bithy.766548", batch: "২০২৫-২৬", photo: "2612027126.jpg", comment: "Be your own kind of beautiful" },
+    { id: 2610527127, nameBn: "মাহমুদুল হাসান (মিরাজ)", nameEn: "Mahamudul Hasan (miraz)", nickBn: "হাসান", nickEn: "Hasan", phone: "01790116296", phone2: "01606257648", email: "mahamudulhasan01712@gmail.com", dob: "2004-09-27", blood: "A+", college: "sucipara Degree college", district: "Chandpur", fb: "https://www.facebook.com/share/1JrPvPk7RM/", batch: "২০২৫-২৬", photo: "2610527127.jpg", comment: "PSHRD-30" },
+    { id: 2610627130, nameBn: "মো: জিসান রহমান", nameEn: "MD:ZESAN RAHMAN", nickBn: "জিসান", nickEn: "ZESAN", phone: "01705401911", phone2: "", email: "mdzesenrahman@gmail.com", dob: "2006-12-10", blood: "A+", college: "AMINUR RAHMAN COLLEGE ,MOHAMMADPUR", district: "MAGURA", fb: "https://www.facebook.com/share/1CmzQAVPh7/?mibextid=wwXIfr", batch: "২০২৫-২৬", photo: "2610627130.jpg", comment: "Life is dull." },
+    { id: 2610627131, nameBn: "মোঃ আরিফুল ইসলাম পিয়েল", nameEn: "Md. Ariful Islam Piyel", nickBn: "পিয়েল", nickEn: "Piyel", phone: "01930044469", phone2: "01600038560", email: "arifulislampiyel493@gmail.com", dob: "2006-06-14", blood: "O+", college: "Hafez Ziaur Rahman college", district: "Netrokona", fb: "https://www.facebook.com/ariful.islam.piyel", batch: "২০২৫-২৬", photo: "2610627131.jpg", comment: "" },
+    { id: 2610927132, nameBn: "মোঃ সাগর সারোয়ার", nameEn: "MD SAGOR SAROWAR", nickBn: "সাগর", nickEn: "SAGOR", phone: "01710744297", phone2: "01710744297", email: "sagorsarowar97@gmail.com", dob: "2007-01-01", blood: "B+", college: "Binodpur Degree College", district: "Chapainawabgonj", fb: "https://www.facebook.com/share/17j4dgSkNE/", batch: "২০২৫-২৬", photo: "2610927132.jpg", comment: "" },
+    { id: 2610827134, nameBn: "মোঃ শরিফুজ্জামান শিমুল", nameEn: "Md shorifuzzaman shimul", nickBn: "শিমুল", nickEn: "Shimul", phone: "01323127826", phone2: "01323127826", email: "mdshorifuzzaman2006@gmail.com", dob: "2006-04-06", blood: "B+", college: "Kurigram government College", district: "Kurigram", fb: "https://www.facebook.com/share/1DjCdAtjB5/", batch: "২০২৫-২৬", photo: "2610827134.jpg", comment: "Editor" },
+    { id: 2610727135, nameBn: "তৌহিদুল ইসলাম", nameEn: "Tohidul Islam", nickBn: "তোহিদ", nickEn: "Touhid", phone: "01795719944", phone2: "01795719944", email: "mdy45418@gmail.com", dob: "2006-07-29", blood: "A+", college: "Government mahatavuddin Degree College", district: "Jhenaidah", fb: "https://www.facebook.com/profile.php?id=61570802704612", batch: "২০২৫-২৬", photo: "2610727135.jpg", comment: "" },
+    { id: 2610727136, nameBn: "মো: ফাহিম আকতাব কনক", nameEn: "MD FAHIM AKTAB KONOK", nickBn: "কনক", nickEn: "KONOK", phone: "01406763238", phone2: "01406763238", email: "fahimaktab41@ gmail.com", dob: "2005-09-23", blood: "A+", college: "Kushtia Govt College", district: "Kushtia", fb: "https://www.facebook.com/share/1BwpUfXoor/", batch: "২০২৫-২৬", photo: "2610727136.jpg", comment: "All-rounder" },
+    { id: 2610427137, nameBn: "মো. রায়হানুর ইসলাম ভূঁইয়া", nameEn: "Md. Rayhanur Islam Bhuiyan", nickBn: "রায়হান", nickEn: "Rayhan", phone: "01940400571", phone2: "01614432439", email: "mdrayhanur06@gmail.com", dob: "2007-01-03", blood: "O+", college: "উত্তরা সরকারি কলেজ,ঢাকা।", district: "কুমিল্লা", fb: "https://www.facebook.com/mdrayhanur.islambhuiyan", batch: "২০২৫-২৬", photo: "2610427137.jpg", comment: "" },
+    { id: 2611027138, nameBn: "এ.এন.এ.কুরাইশ", nameEn: "A.N.A QURAISH", nickBn: "কুরাইশ", nickEn: "QURAISH", phone: "01788060385", phone2: "01788060385", email: "abunaseralquraish@gmail.com", dob: "2007-01-07", blood: "B+", college: "Sristy College of Tangail", district: "Gaibandha", fb: "https://www.facebook.com/share/1SutxaVqhL/", batch: "২০২৫-২৬", photo: "2611027138.jpg", comment: "Yes" },
+    { id: 2610527139, nameBn: "হাবিবুল বাশার", nameEn: "Habibul Basher", nickBn: "বাশার", nickEn: "Basher", phone: "01346261218", phone2: "01346261218", email: "habibulbasher858@gmail.com", dob: "2006-11-07", blood: "O+", college: "Carmichael College, Rangpur", district: "Sirajgang", fb: "https://www.facebook.com/share/1Docgjwbxu/", batch: "২০২৫-২৬", photo: "2610527139.jpg", comment: "Just follow your passion 😑" },
+    { id: 2610527140, nameBn: "শাহরিয়ার সরকার স্নেহ", nameEn: "Shahriar Sarkar Snaho", nickBn: "স্নেহ", nickEn: "Snaho", phone: "01522106423", phone2: "01522106423", email: "snahosarkar343@gmail.com", dob: "2007-10-30", blood: "O+", college: "Thakurgaon Govt. College, Thakurgaon", district: "Thakurgaon", fb: "https://www.facebook.com/share/1CyfEXttcA/", batch: "২০২৫-২৬", photo: "2610527140.jpg", comment: "🫪🫪" },
+    { id: 2612327141, nameBn: "হোমায়রা জান্নাত ন‌ওশিন", nameEn: "Homayra Jannat Nowshin", nickBn: "ন‍ওশিন", nickEn: "Nowshin", phone: "01327274711", phone2: "", email: "176.homayrajannatnowshin@gmail.com", dob: "2005-09-26", blood: "A+", college: "Rajshahi College", district: "Rajshahi", fb: "https://www.facebook.com/share/14YjbieYknb/", batch: "২০২৫-২৬", photo: "2612327141.jpg", comment: "The Resilient and Radiant" },
+    { id: 2610627142, nameBn: "মো: শাহরিয়ার রহমান", nameEn: "MD. SHAHRIAR RAHMAN", nickBn: "শাহরিয়ার", nickEn: "SHAHRIAR", phone: "01609396796", phone2: "", email: "shahriarrahmanhridoy17@gmail.com", dob: "2004-06-17", blood: "B+", college: "Lalmonirhat Govt. College", district: "Lalmonirhat", fb: "https://www.facebook.com/share/1BeQ4W173F/", batch: "২০২৫-২৬", photo: "2610627142.jpg", comment: "Alhamdulillah" },
+    { id: 2610227143, nameBn: "মোজাহিদুল ইসলাম", nameEn: "MD. Mozahidul Islam", nickBn: "মাহিন", nickEn: "Mahin", phone: "01927692774", phone2: "01575807495", email: "mahin56571@gmail.com", dob: "2007-09-17", blood: "O+", college: "Comilla government college", district: "Cumilla", fb: "https://www.facebook.com/mujahidul.islam.mahin.327988", batch: "২০২৫-২৬", photo: "2610227143.jpg", comment: "" },
+    { id: 2610827144, nameBn: "মোঃ সিফাতুল্যাহ (সিফাত)", nameEn: "Md. Sifatullah (Sifat)", nickBn: "সিফাত", nickEn: "Sifat", phone: "01825682376", phone2: "01825682376", email: "mdsifatullah.2376@gmail.com", dob: "2006-02-23", blood: "A+", college: "Madhupur Shahid Smrity College", district: "Tangail", fb: "https://www.facebook.com/share/1GJvhXcRRQ/", batch: "২০২৫-২৬", photo: "2610827144.jpg", comment: "" },
+    { id: 2610727146, nameBn: "মোঃ তারেক হোসেন", nameEn: "Md. Tarek Hossain", nickBn: "তারেক", nickEn: "Tarek", phone: "01840184597", phone2: "", email: "badboy75857@gmail.com", dob: "2006-01-12", blood: "AB+", college: "Kaunia College", district: "Rangpur", fb: "https://www.facebook.com/share/1JckzeU2bP/", batch: "২০২৫-২৬", photo: "2610727146.jpg", comment: "Cr7 real Goat" },
+    { id: 2612427147, nameBn: "রাহিকা মুরসালাত", nameEn: "Rahika Mursalat", nickBn: "রাহিকা", nickEn: "Rahika", phone: "01577499956", phone2: "01577499956", email: "rahikam125@gmail.com", dob: "2008-12-18", blood: "B+", college: "Savar Cantonment Public  School  and College", district: "Dhaka", fb: "https://www.facebook.com/share/1MLbvKKSyM/", batch: "২০২৫-২৬", photo: "2612427147.jpg", comment: "Good initiative. 👍" },
+    { id: 2611227148, nameBn: "রাফি বিন মাহবুব", nameEn: "Rafi Bin Mahbub", nickBn: "রাফি", nickEn: "Rafi", phone: "01576839181", phone2: "01576839181", email: "absrafi516@gmail.com", dob: "2006-03-29", blood: "O+", college: "Lalmonirhat Government College", district: "Kurigram", fb: "https://www.facebook.com/a.b.s.rafi.102634", batch: "২০২৫-২৬", photo: "2611227148.jpg", comment: "" },
+    { id: 2612427149, nameBn: "সারোয়াত রহমান লামিয়া", nameEn: "Saroat Rahman Lamia", nickBn: "লামিয়া", nickEn: "Lamia", phone: "01922376402", phone2: "01922376402", email: "saroatrahmanlamia@gmail.com", dob: "2007-12-10", blood: "AB+", college: "বি .পি .এ .টি.সি স্কুল এন্ড কলেজ", district: "ঢাকা", fb: "https://www.facebook.com/share/1DTV7Cuknf/", batch: "২০২৫-২৬", photo: "2612427149.jpg", comment: "" },
+    { id: 2610527151, nameBn: "মোঃ সাগর আলী", nameEn: "MD SAGOR ALI", nickBn: "সাগর", nickEn: "Sagor", phone: "01870842333", phone2: "01572923757", email: "19126348s@gmail.com", dob: "2006-02-04", blood: "O+", college: "রাজশাহী কলেজিয়েট স্কুল এন্ড কলেজ", district: "রাজশাহী", fb: "https://www.facebook.com/md.sagor.770402", batch: "২০২৫-২৬", photo: "2610527151.jpg", comment: "Very good" },
+    { id: 2612027152, nameBn: "মোসাঃসালমা খাতুন", nameEn: "Mst.Salma Khatun", nickBn: "সালমা", nickEn: "Salma", phone: "01761961492", phone2: "01344032671", email: "ssalmakhatun780@gmail.com", dob: "2006-10-18", blood: "AB+", college: "Nawabganj Govt College", district: "Chapainawabganj", fb: "https://www.facebook.com/profile.php?id=100074045079202&mibextid=zbwkwl", batch: "২০২৫-২৬", photo: "2612027152.jpg", comment: "" },
+    { id: 2610627153, nameBn: "হরে কৃষ্ণ", nameEn: "Hare Krishna", nickBn: "কৃষ্ণ", nickEn: "Krishna", phone: "01305327969", phone2: "01970773239", email: "harekrishna3256@gmail.com", dob: "2006-01-30", blood: "A+", college: "Aminur Rahman College", district: "Magura", fb: "https://www.facebook.com/krishna.roy.667915", batch: "২০২৫-২৬", photo: "2610627153.jpg", comment: "" },
+    { id: 2612627154, nameBn: "মোছাঃ আসমাউল হুসনা সাবিহা", nameEn: "Mst. Asmaul Husna Sabiha", nickBn: "সাবিহা", nickEn: "Sabiha", phone: "01410763654", phone2: "01410763654", email: "asmaulhusnasabiha444@gmail.com", dob: "2007-07-01", blood: "O+", college: "Islamia Govt. College", district: "Sirajganj", fb: "Asmaul Husna Sabiha", batch: "২০২৫-২৬", photo: "2612627154.jpg", comment: "" },
+    { id: 2610527156, nameBn: "যাকী তাজওয়ার", nameEn: "Yakee Tajwar", nickBn: "তাজওয়ার", nickEn: "Tajwar", phone: "01749341537", phone2: "", email: "yakeetajwar666888@gmail.com", dob: "2008-10-27", blood: "A+", college: "Pabna Government College", district: "Sirajgonj", fb: "https://www.facebook.com/share/1A9v558xAt/", batch: "২০২৫-২৬", photo: "2610527156.jpg", comment: "IYI<br>Rare bird" },
+    { id: 2611027158, nameBn: "মো: শামীম রেজা।", nameEn: "MD. SHAMIM REZA", nickBn: "শামীম", nickEn: "SHAMIM", phone: "01764461813", phone2: "", email: "sr3891405@gmail.com", dob: "2006-10-05", blood: "A+", college: "Amla Government College", district: "KUSHTIA", fb: "https://www.facebook.com/share/1KUgw961dF/", batch: "২০২৫-২৬", photo: "2611027158.jpg", comment: "Selenophile🌕" },
+    { id: 2610827159, nameBn: "মো: রোকনুজ্জামান রোকন", nameEn: "MD:Rokonujaman Rokon", nickBn: "রোকন", nickEn: "Rokon", phone: "01329040164", phone2: "01340968619", email: "rokonrj98@gmail.com", dob: "2005-09-06", blood: "O+", college: "Fulbari Gvt Collage", district: "Dinajpur", fb: "https://www.facebook.com/rokonujjaman.rokon.119156", batch: "২০২৫-২৬", photo: "2610827159.jpg", comment: "nothing" },
+    { id: 2611227160, nameBn: "আশরাফ আহমেদ", nameEn: "Ashraf Ahmed", nickBn: "আশরাফ", nickEn: "Ashraf", phone: "01774284591", phone2: "", email: "ashrafahmed7725@gmail.com", dob: "2007-01-30", blood: "B+", college: "Kazi Mohammad Shafiqul Islam College", district: "Habiganj", fb: "https://www.facebook.com/share/1CcUAGrQk8/", batch: "২০২৫-২৬", photo: "2611227160.jpg", comment: "" },
+    { id: 2611227161, nameBn: "মোমিন হোসেন তিবরো", nameEn: "Momin Hossain Tibro", nickBn: "ফারদিন", nickEn: "Fardin", phone: "01811573577", phone2: "", email: "mhfardinx19@gmail.com", dob: "2006-10-19", blood: "A+", college: "জয়নাল হাজারী কলেজ", district: "ফেনী", fb: "https://www.facebook.com/profile.php?id=61591623140413", batch: "২০২৫-২৬", photo: "2611227161.jpg", comment: "" },
+    { id: 2610427162, nameBn: "মো: নাঈম আল হোসাইন", nameEn: "Md. Nayem Al Hossain", nickBn: "নাঈম", nickEn: "Nayem", phone: "01990238728", phone2: "", email: "mdnayemalhossain@gmail.com", dob: "2007-05-01", blood: "O+", college: "Savar Govt. College", district: "Dhaka", fb: "https://www.facebook.com/profile.php?id=61566699441195", batch: "২০২৫-২৬", photo: "2610427162.jpg", comment: "Motu" },
+    { id: 2610327163, nameBn: "মো: ইমরান হোসেন ইমন", nameEn: "Md Emran Hosen Emon", nickBn: "ইমন", nickEn: "Emon", phone: "01856502752", phone2: "01982877730", email: "Ibnaalam2752@gmail.com", dob: "2007-05-01", blood: "B+", college: "Siddheswari college Dhaka", district: "Cumilla", fb: "https://www.facebook.com/md.emon.770369", batch: "২০২৫-২৬", photo: "2610327163.jpg", comment: "কিছু বলবো না" },
+    { id: 2610627165, nameBn: "মাহিনুর ইসলাম মুভিন", nameEn: "Mahinur Islam Muvin", nickBn: "মুভিন", nickEn: "Muvin", phone: "01401060282", phone2: "", email: "muvin13@icloud.com", dob: "2007-02-18", blood: "B+", college: "বীরশ্রেষ্ঠ নূর মোহাম্মদ পাবলিক কলেজ", district: "মেহেরপুর", fb: "https://www.facebook.com/share/1CfjG1NLEy/?mibextid=wwXIfr", batch: "২০২৫-২৬", photo: "2610627165.jpg", comment: "" },
+    // batch 2024-25 (5 members)
+    { id: 2510827101, nameBn: "তৌহিদ মন্ডল", nameEn: "Tauhid Mondol", nickBn: "তৌহিদ", nickEn: "Tauhid", phone: "01569189744", phone2: "", email: "Stmmondol@gmail", dob: "2006-01-01", blood: "B+", college: "Joypurhat Government College", district: "Joypurhat", fb: "https://www.facebook.com/share/1JZ9B9s1VU/", batch: "২০২৪-২৫", photo: "2510827101.jpg", comment: "No" },
+    { id: 2510527105, nameBn: "আহসান সরকার", nameEn: "MD.Ahsan Sarker", nickBn: "আহসান", nickEn: "Ahsan", phone: "01577377572", phone2: "", email: "ahsansarkerru@gmail.com", dob: "2006-07-30", blood: "AB+", college: "Savar Government College", district: "Dhaka", fb: "https://www.facebook.com/share/1PC3SJ3o1a/", batch: "২০২৪-২৫", photo: "2510527105.jpg", comment: "Everyone will have to answer to Allah for their deeds." },
+    { id: 2510727108, nameBn: "মো: আবু ইউসুফ", nameEn: "md. Abu yousuf", nickBn: "জুনাঈদ", nickEn: "junaeid", phone: "01904975209", phone2: "01814614882", email: "Junaeidalhabib10@gamil.com", dob: "2006-10-27", blood: "A+", college: "Shahed sayed nazrul islam College Mymensingh", district: "Mymensingh", fb: "Nai", batch: "২০২৪-২৫", photo: "2510727108.jpg", comment: "No complain" },
+    { id: 2511027125, nameBn: "মো: সাময়ান লাবিব", nameEn: "Md Shamian Labib", nickBn: "লাবিব", nickEn: "লাবিব", phone: "01827384217", phone2: "01827384217", email: "mlabib870@gmail.com", dob: "2005-10-25", blood: "AB+", college: "মহেশপুর ডিগ্রী কলেজ", district: "ঝিনাইদহ", fb: "https://www.facebook.com/share/1NZ9nMGN38/", batch: "২০২৪-২৫", photo: "2511027125.jpg", comment: "" },
+    { id: 25106227159, nameBn: "মোঃ ইমন সাদিক", nameEn: "MD.Emon Sadik", nickBn: "ইমন", nickEn: "Emon", phone: "01793463994", phone2: "01793463994", email: "sadikemon631@gmail.com", dob: "2004-11-10", blood: "B+", college: "বড়াইগ্রাম সরকারি অনার্স কলেজ", district: "নাটোর", fb: "https://www.facebook.com/emon.sadik.khan", batch: "২০২৪-২৫", photo: "25106227159.jpg", comment: "Awesome idea 💡" },
+    { id: 2512227160, nameBn: "অনিকা আহমেদ উপমা", nameEn: "Anika Ahmed Upama", nickBn: "উপমা", nickEn: "Upama", phone: "01613661472", phone2: "", email: "ahmedanika159@gmail.com", dob: "2005-03-28", blood: "O+", college: "Sreenagar Govt College", district: "Munshiganj", fb: "https://www.facebook.com/share/1DsPPkG7XA/", batch: "২০২৪-২৫", photo: "2512227160.jpg", comment: "Science Enthusiast" }
+  ];
+
+  // render function
+  function renderMembers(list) {
+    const grid = document.getElementById('memberGrid');
+    grid.innerHTML = '';
+    list.forEach(m => {
+      // photo fallback: use id.jpg, id.png, id.heic (but we use id.jpg as standard)
+      const photoSrc = m.photo || `${m.id}.jpg`;
+      // phone numbers (with country code 880 for whatsapp)
+      const phoneMain = m.phone || '';
+      const waNumber = phoneMain.replace(/[^0-9]/g, '');
+      const waLink = waNumber ? `https://wa.me/880${waNumber}` : '#';
+      const emailLink = m.email ? `mailto:${m.email}` : '#';
+      const fbLink = m.fb && m.fb !== 'Nai' ? m.fb : '#';
+      const callLink = phoneMain ? `tel:${phoneMain}` : '#';
+
+      const card = document.createElement('div');
+      card.className = 'member-card';
+      card.innerHTML = `
+        <img class="avatar" src="${photoSrc}" alt="${m.nameBn}" 
+             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22110%22 height=%22110%22 viewBox=%220 0 110 110%22%3E%3Crect width=%22110%22 height=%22110%22 fill=%22%23d9e2ef%22/%3E%3Ctext x=%2232%22 y=%2262%22 fill=%22%233f5a77%22 font-size=%2240%22 font-weight=%22bold%22%3E${m.nameBn.charAt(0)}%3C/text%3E%3C/svg%3E'">
+        <div class="member-name-bn">${m.nameBn}</div>
+        <div class="member-name-en">${m.nameEn}</div>
+        <div class="member-nick"><i class="far fa-smile" style="margin-right:4px;"></i> ${m.nickBn} (${m.nickEn})</div>
+        <div class="member-id"><i class="far fa-id-card"></i> ${m.id}</div>
+        <div class="extra-meta">
+          <span><i class="fas fa-graduation-cap"></i> ${m.batch}</span>
+          <span><i class="fas fa-tint"></i> ${m.blood}</span>
+          <span><i class="fas fa-map-pin"></i> ${m.district}</span>
+        </div>
+        <div class="contact-icons">
+          <a href="${waLink}" target="_blank" class="whatsapp" title="WhatsApp"><i class="fab fa-whatsapp"></i> </a>
+          <a href="${emailLink}" class="email" title="ইমেইল"><i class="fas fa-envelope"></i> </a>
+          <a href="${callLink}" class="phone" title="ফোন"><i class="fas fa-phone-alt"></i> </a>
+          <a href="${fbLink}" target="_blank" class="fb" title="Facebook"><i class="fab fa-facebook"></i> </a>
+        </div>
+        ${m.comment ? `<div style="font-size:0.7rem;color:#5e7490;margin-top:6px;font-style:italic;max-width:200px;">💬 ${m.comment}</div>` : ''}
+      `;
+      grid.appendChild(card);
+    });
+    document.getElementById('memberCount').innerText = list.length;
+  }
+
+  // filter
+  function filterMembers() {
+    const q = document.getElementById('searchInput').value.toLowerCase().trim();
+    const filtered = fullMembers.filter(m => 
+      m.nameBn.includes(q) || 
+      m.nameEn.toLowerCase().includes(q) || 
+      m.nickBn.includes(q) || 
+      m.nickEn.toLowerCase().includes(q) || 
+      String(m.id).includes(q) ||
+      m.district.includes(q)
+    );
+    renderMembers(filtered);
+  }
+
+  // initial render
+  renderMembers(fullMembers);
+</script>
+</body>
+</html>
